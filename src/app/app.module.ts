@@ -7,6 +7,9 @@ import { RepertoireComponent } from './repertoire/repertoire.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { ContactLockComponent } from './contact-lock/contact-lock.component';
 import { RoutingModule } from './Router';
+import { ChatComponent } from './chat/chat.component';
+import { StatutComponent } from './statut/statut.component';
+import { TeamPageComponent } from './team-page/team-page.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { RoutingModule } from './Router';
     MainComponent,
     RepertoireComponent,
     ArchiveComponent,
-    ContactLockComponent
+    ContactLockComponent,
+    ChatComponent,
+    StatutComponent,
+    TeamPageComponent
   ],
   imports: [
     BrowserModule,
