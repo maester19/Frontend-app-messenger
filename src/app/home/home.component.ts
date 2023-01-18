@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RepertoireService } from 'src/service/data/repertorie/repertoire.service';
 import { AuthService } from 'src/service/data/user/auth.service';
 import { UserService } from 'src/service/data/user/user.service';
 
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private repService: RepertoireService
   ) { }
 
   ngOnInit(): void {
@@ -64,11 +66,19 @@ export class HomeComponent implements OnInit {
       this.load = true;
       this.userService.create(this.profil)
       .then((response) => { 
+        let user: any = response
         console.log(response)
         this.load = false
+        this.profil = this.userService.createEmptyUser()
+        this.verify = ''
         this.verif.msg = "Utilisateur créé " 
+        this.repService.create({contacts: [], userId: user.user._id }).then(response => {
+          console.log(response)
+        })
       })
       .catch((error) => { console.log(error), this.verif.msg = "Adresse email deja utiliser veillez la changer" })
+
+      
     }
     
   }

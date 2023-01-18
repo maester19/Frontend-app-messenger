@@ -3,10 +3,10 @@
     <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
       <div class="tab-content" id="nav-tabContent">
          <div class="tab-pane fade show active" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
-            <app-chat></app-chat>
+            <app-chat [profil]="profil"></app-chat>
          </div>
          <div class="tab-pane fade" id="list-contact" role="tabpanel" aria-labelledby="list-contact-list">
-            <app-repertoire></app-repertoire>
+            <app-repertoire [repertoire]="repertoire" [profil]="profil"></app-repertoire>
          </div>
          <div class="tab-pane fade" id="list-archived" role="tabpanel" aria-labelledby="list-archived-list">
             <app-archive></app-archive>
@@ -29,22 +29,22 @@
           </div>
           <div class="list-group list-group-flush" id="list-tab" role="tablist">
              <a class="list-group-item list-group-item-action active" id="list-chat-list" data-toggle="list" href="#list-chat" role="tab" aria-controls="chat">
-                <i class="feather-user mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Conversations 68</span>
+                <i class="feather-user mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Conversations {{ profil.listDisc.length }}</span>
              </a>
              <a class="list-group-item list-group-item-action" id="list-contact-list" data-toggle="list" href="#list-contact" role="tab" aria-controls="contact">
-                <i class="feather-users mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Contacts 869</span>
+                <i class="feather-users mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Contacts {{ repertoire.contacts.length }}</span>
              </a>
              <a class="list-group-item list-group-item-action" id="list-archived-list" data-toggle="list" href="#list-archived" role="tab" aria-controls="archived">
-                <i class="feather-user-check mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Archive 156</span>
+                <i class="feather-user-check mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Archive 0</span>
              </a>
              <a class="list-group-item list-group-item-action" id="list-teams-list" data-toggle="list" href="#list-teams" role="tab" aria-controls="teams">
-                <i class="feather-message-circle mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Groupes 15</span>
+                <i class="feather-message-circle mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Groupes 0</span>
              </a>
              <a class="list-group-item list-group-item-action" id="list-statut-list" data-toggle="list" href="#list-statut" role="tab" aria-controls="statut">
-                <i class="feather-clipboard mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Statuts 3</span>
+                <i class="feather-clipboard mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Statuts 0</span>
              </a>
              <a class="list-group-item list-group-item-action" id="list-lock-list" data-toggle="list" href="#list-lock" role="tab" aria-controls="lock">
-                <i class="feather-lock mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Personnes bloqués 8</span>
+                <i class="feather-lock mr-2 text-dark"></i> <span class="ml-auto font-weight-bold text-white">Personnes bloqués 0</span>
              </a>
           </div>
        </div>
@@ -54,12 +54,15 @@
              <img src="assets/img/user.png" class="img-fluid rounded-circle shadow-sm" alt="Responsive image">
           </div>
           <div class="p-3 border-bottom">
-             <h6 class="text-dark">Gurdeep, grow your career by following <span class="font-weight-bold"> Askbootsrap</span></h6>
-             <p class="mb-0 text-muted">Stay up-to industry trends!</p>
+             <h6 class="text-dark">Informations personnelles</h6>
+             <p class="mb-0 text-success"> {{ profil.name }} </p>
+             <p class="mb-0 text-success"> {{ profil.phone }} </p>
+             <p class="mb-0 text-secondary"> {{ profil.description }} </p>
           </div>
           <div class="p-3">
-             <button type="button" class="btn btn-outline-primary btn-sm pl-4 pr-4"> FOLLOW </button>
+             <button type="button" class="btn btn-outline-warning btn-sm pl-4 pr-4" (click)="logout()"> DECONNECTER </button>
           </div>
        </div>
     </aside>
  </div>
+ <input type="number" name="listDisc" [(ngModel)]="profil.listDisc.length" (change)="actudisc()">

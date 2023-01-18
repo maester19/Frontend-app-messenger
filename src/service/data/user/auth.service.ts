@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BackendService } from '../../backend/backend.service';
 import { CookieService } from 'ngx-cookie-service'
-import { AffichageService } from 'src/service/affichage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,6 @@ export class AuthService {
   
   constructor(
     private http: HttpClient,
-    private affichageService: AffichageService,
     private cookieService: CookieService
   ) {}
   
@@ -29,7 +27,6 @@ export class AuthService {
         .subscribe((response) => {
           AuthService.user = response;
           resolve(response);
-          this.affichageService.setNav(false);
         });
     });
   }
@@ -49,7 +46,6 @@ export class AuthService {
               next: response => {
                 if(response.user != null){
                   AuthService.profil = response.user
-                  this.affichageService.setNav(false);
                   this.cookieService.set('cookie-MS', JSON.stringify(AuthService.profil));
                   AuthService.isOnline = true;
                   resolve(response.user);
@@ -71,15 +67,7 @@ export class AuthService {
     if (this.cookieService.check('cookie-MS')) {
       AuthService.profil = JSON.parse(this.cookieService.get('cookie-MS'));
       AuthService.user = JSON.parse(this.cookieService.get('token-MS'));
-
-      this.http.get<any>(BackendService.url + "/entreprise/getByUser/" + AuthService.profil._id).subscribe((response)=> {
-        if(response){
-          this.affichageService.setNav(false);
-          AuthService.isOnline = true;
-        }
-      })
-
-      
+      AuthService.isOnline = true;
     }
     return AuthService.isOnline;
   }
@@ -91,7 +79,6 @@ export class AuthService {
     AuthService.isOnline = false;
     AuthService.profil = null;
     AuthService.user = { userId: "", token: "" }
-    this.affichageService.setNav(true)
   }
 
   getCurrentUser(){

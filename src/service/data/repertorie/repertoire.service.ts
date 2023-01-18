@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BackendService } from '../../backend/backend.service';
-import { FormatUserService } from './format-user.service';
-import { AuthService } from './auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  url = '/auth';
+export class RepertoireService {
+  url = '/repertoire';
   public static user: any = { userId: "", token: "" };
   public static profil: any
   public static isOnline: any = false
@@ -19,36 +17,35 @@ export class UserService {
   
   constructor(
     private http: HttpClient,
-    private formatUserService: FormatUserService,
     private cookieService: CookieService,
-    private authservice: AuthService
   ) {}
   
   public getAll() {
     return new Promise((resolve, reject) => {
       this.http.get<any>(BackendService.url + this.url).subscribe((response) => {
-        resolve(response.users);
+        resolve(response.repertoires);
       });
     });
   }
 
-  public getFirstPage() {
+  public create(repertoire: any) {
+    var url = BackendService.url + this.url ;
+    var data= repertoire;
     return new Promise((resolve, reject) => {
       this.http
-        .get(BackendService.url + this.url + '?page=1')
+        .post(url,data)
         .subscribe((response) => {
-          this.setCacheTaches(this.format(response));
-          resolve(this.getCacheTaches());
+          resolve(response);
         });
     });
   }
+
   public search(val: any) {
     return new Promise((resolve, reject) => {
       this.http
         .get(BackendService.url + this.url + '/search/' + val)
         .subscribe((response) => {
-          this.setCacheTaches(this.format(response));
-          resolve(this.getCacheTaches());
+          resolve(response);
         });
     });
   }
@@ -57,34 +54,7 @@ export class UserService {
     var url = BackendService.url + this.url + '/' + user._id;
     return new Promise((resolve, reject) => {
       this.http
-        .put<any>(url, this.formatUserService.formatForUpdate(user))
-        .subscribe((response) => {
-          this.authservice.setProfil(response.user)
-          resolve(response);
-        });
-    });
-  }
-
-  
-  /* mise a jour d'un user */
-  public changePassword(id:any, info: any) {
-    var url = BackendService.url + this.url + '/changePW/' + id;
-    return new Promise((resolve, reject) => {
-      this.http
-        .put<any>(url, info)
-        .subscribe((response) => {
-          resolve(response.message);
-        });
-    });
-  }
-
-   /* creer d'un user */
-   public create(user: any) {
-    var url = BackendService.url + this.url + '/signup';
-    var data=this.formatUserService.formatForUpdate(user);
-    return new Promise((resolve, reject) => {
-      this.http
-        .post(url,data)
+        .put<any>(url, user)
         .subscribe((response) => {
           resolve(response);
         });
@@ -108,7 +78,21 @@ export class UserService {
       this.http.get<any>(`${BackendService.url + this.url}/${id}`)
       .subscribe({
         next: response => {
-            resolve(response.user);
+            resolve(response.repertoire);
+        },
+        error: error => {
+           reject(error);
+        }
+    });
+    })
+  }
+ 
+  public getByUser(id: string) {
+    return new Promise((resolve, reject) => {
+      this.http.get<any>(`${BackendService.url + this.url}/getByUser/${id}`)
+      .subscribe({
+        next: response => {
+            resolve(response.repertoire);
         },
         error: error => {
            reject(error);
@@ -117,25 +101,6 @@ export class UserService {
     })
   }
 
-  format(response: any) {
-    return this.formatUserService.format(response);
-  }
-   /* met a jour la cache*/
-   setCacheTaches(taches:any){
-    UserService.taches=taches;
-    UserService.haveTaches=true;
-   }
-   /* retourne si la cache est remplie*/
-   cacheIsFilled(){
-      return  UserService.haveTaches;
-   }
-   /* renvoie la cache*/
-   getCacheTaches(){
-    return   UserService.taches;
-   }
-   
-   createEmptyUser(){
-    return this.formatUserService.createEmptyUser();
-   }
+
 
 }

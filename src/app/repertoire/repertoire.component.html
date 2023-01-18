@@ -8,20 +8,28 @@
                     <input placeholder="Search messages" type="text" class="form-control">
                 </div>
                 <div class="osahan-chat-list">
-                    <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
+                    <h5 class="text-primary text-center border">my Contacts</h5>
+                    <a *ngFor="let contact of contacts">
+                        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
+                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/p9.png" alt=""></div>
+                            <div class="font-weight-bold mr-1 overflow-hidden">
+                                <div class="text-truncate h6 text-white">{{ contact.name }}</div>
+                                <div class="small text-truncate overflow-hidden text-black-50"> {{ contact.description }}</div>
+                            </div>
+                        </div>
+                    </a>
+                    <h5 class="text-success text-center border">Others Contacts</h5>
+                    <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" *ngFor="let user of users">
                         <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/p9.png" alt=""></div>
                         <div class="font-weight-bold mr-1 overflow-hidden">
-                            <div class="text-truncate">Ashley Briggs</div>
-                            <div class="small text-truncate overflow-hidden text-black-50"> Pellentesque semper ex diam, at tristique ipsum varius sed. Pellentesque non metus ullamcorper</div>
+                            <div class="text-truncate h6 text-white">{{ user.name }}</div>
+                            <div class="small text-truncate overflow-hidden text-black-50"> {{ user.description }}</div>
                         </div>
-                    </div>
-                    <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
-                        <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/p1.png" alt=""></div>
-                        <div class="font-weight-bold mr-1 overflow-hidden">
-                            <div class="text-truncate">Carl Jenkins
-                            </div>
-                            <div class="small text-truncate overflow-hidden text-black-50"> Semper ex diam, at tristique ipsum varius sed. Pellentesque non metus ullamcorper</div>
-                        </div>
+                        <span class="ml-auto mb-auto">
+                            <button type="button" class="btn btn-light btn-sm rounded-circle ml-2" (click)="add(user)">
+                                <i class="feather-plus"></i>
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
