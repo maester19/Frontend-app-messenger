@@ -10,6 +10,10 @@ import { RoutingModule } from './Router';
 import { ChatComponent } from './chat/chat.component';
 import { StatutComponent } from './statut/statut.component';
 import { TeamPageComponent } from './team-page/team-page.component';
+import { HomeComponent } from './home/home.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ModalComponent } from './subComponent/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +24,15 @@ import { TeamPageComponent } from './team-page/team-page.component';
     ContactLockComponent,
     ChatComponent,
     StatutComponent,
-    TeamPageComponent
+    TeamPageComponent,
+    HomeComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
     RoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,28 @@
+<!-- Button trigger modal
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+Launch demo modal
+</button>  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-secondary" id="exampleModalLabel">Validation du formulaire</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" *ngIf="verif.next == ''">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" *ngIf="verif.next != ''" (click)="redirect()">
+                    <span aria-hidden="true" class="primary-color-2">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-secondary">
+                {{ verif.msg }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" *ngIf="verif.next == ''">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="verif.next != ''" (click)="redirect()">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
